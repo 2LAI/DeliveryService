@@ -4,15 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Collection;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
 
-    private Long id;
+    private Integer id;
     private Customer customer;
+    private Store store;
     private Payment payment;
-    private List<Product> orderItems;
+    private Collection<Product> productOrderList;
+    private Courier courier;
 }

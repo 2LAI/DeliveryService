@@ -12,12 +12,12 @@ public class ProductRepository {
 
     public static void initializeProductRepository() {
 
-        productList.add(new Product(0L, "Milk 3.2%", ProductCategory.MILK));
-        productList.add(new Product(1L, "Milk 2.2%", ProductCategory.MILK));
-        productList.add(new Product(2L, "Orange Juice", ProductCategory.DRINKS));
-        productList.add(new Product(3L, "Pasta", ProductCategory.BAKERY));
-        productList.add(new Product(4L, "Banana", ProductCategory.FRUITS));
-        productList.add(new Product(5L, "Tomato", ProductCategory.VEGETABLES));
+        productList.add(new Product(0, "Milk 3.2%", ProductCategory.MILK));
+        productList.add(new Product(1, "Milk 2.2%", ProductCategory.MILK));
+        productList.add(new Product(2, "Orange Juice", ProductCategory.DRINKS));
+        productList.add(new Product(3, "Pasta", ProductCategory.BAKERY));
+        productList.add(new Product(4, "Banana", ProductCategory.FRUITS));
+        productList.add(new Product(5, "Tomato", ProductCategory.VEGETABLES));
 
     }
 

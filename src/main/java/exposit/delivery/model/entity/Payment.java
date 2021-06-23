@@ -13,11 +13,11 @@ import java.util.Date;
 @AllArgsConstructor
 public class Payment {
 
-    private Long id;
+    private Integer id;
     private Customer user;
     private Date date;
     private BigDecimal amount;
     private PaymentTypes paymentTypes;
-    private Courier courier;
+
 
 }
