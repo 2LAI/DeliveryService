@@ -1,7 +1,10 @@
 package exposit.delivery.app;
 
+import exposit.delivery.model.domain.ProductCategory;
 import exposit.delivery.repository.StoreRepository;
+import exposit.delivery.service.ProductService;
 import exposit.delivery.service.implementation.CustomerServiceImpl;
+import exposit.delivery.service.implementation.ProductServiceImpl;
 import exposit.delivery.service.implementation.StoreServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,13 +31,18 @@ public class DemoDeliveryService {
 
         logger.info("\n1 - Create new customer\n" +
                 "2 - Update customer information\n" +
-                "3- Delete customer\n" +
-                "4- Create new store\n" +
-                "5- Update store\n" +
+                "3 - Delete customer\n" +
+                "4 - Create new store\n" +
+                "5 - Update store\n" +
+                "6 - Remove store\n" +
+                "7 - Create new product\n" +
+                "8 - Update product\n" +
+                "9 - Remove product\n" +
                 "Enter number of operation:");
         String menuItem = consoleStr();
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         StoreServiceImpl storeService = new StoreServiceImpl();
+        ProductServiceImpl productService = new ProductServiceImpl();
 
 
         switch (menuItem) {
@@ -53,8 +61,19 @@ public class DemoDeliveryService {
             case "5":
                 storeService.updateStore();
                 break;
+            case "6":
+                storeService.removeStore();
+                break;
+            case "7":
+                productService.createNewProduct();
+                break;
+            case "8":
+                productService.updateProduct();
+                break;
+            case "9":
+                productService.removeProduct();
+                break;
         }
-        logger.info(StoreRepository.storeList);
         showMenu();
 
     }

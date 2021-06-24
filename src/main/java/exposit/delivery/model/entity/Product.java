@@ -15,5 +15,10 @@ public class Product {
     private String productName;
     private ProductCategory productCategory;
 
-
+    @Override
+    public String toString() {
+        return "\nProduct id = " + id + "\n" +
+                "| productName = " + productName + "\n" +
+                "| productCategory = " + productCategory + "\n";
+    }
 }
