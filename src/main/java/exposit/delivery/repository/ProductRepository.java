@@ -20,7 +20,6 @@ public class ProductRepository {
         productList.add(new Product(3, "Pasta", ProductCategory.BAKERY));
         productList.add(new Product(4, "Banana", ProductCategory.FRUITS));
         productList.add(new Product(5, "Tomato", ProductCategory.VEGETABLES));
-
     }
 
     public static Integer getProductID() {

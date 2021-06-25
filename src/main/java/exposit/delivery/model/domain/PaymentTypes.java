@@ -1,5 +1,10 @@
 package exposit.delivery.model.domain;
 
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
 public enum PaymentTypes {
 
     CASH(0, "For cash"),
@@ -9,7 +14,7 @@ public enum PaymentTypes {
     private final Integer code;
     private final String description;
 
-    private PaymentTypes(int code, String description) {
+     PaymentTypes(int code, String description) {
         this.code = code;
         this.description = description;
     }
@@ -22,6 +27,16 @@ public enum PaymentTypes {
         return description;
     }
 
+    public static PaymentTypes getByCode(Integer code) {
+
+        Stream<PaymentTypes> values = Arrays.stream(PaymentTypes.values());
+
+        Predicate<PaymentTypes> predicate = x -> x.getCode() == code;
+
+        Optional<PaymentTypes> result = values.filter(predicate).findFirst();
+
+        return result.get();
+    }
 }
 
 

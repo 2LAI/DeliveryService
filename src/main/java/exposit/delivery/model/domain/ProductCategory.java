@@ -18,7 +18,7 @@ public enum ProductCategory {
     private final Integer code;
     private final String description;
 
-    private ProductCategory(int code, String description) {
+    ProductCategory(int code, String description) {
         this.code = code;
         this.description = description;
     }
@@ -40,7 +40,6 @@ public enum ProductCategory {
         Optional<ProductCategory> result = values.filter(predicate).findFirst();
 
         return result.get();
-
     }
 
 

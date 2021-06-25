@@ -2,15 +2,20 @@ package exposit.delivery.service.implementation;
 
 import exposit.delivery.app.DemoDeliveryService;
 import exposit.delivery.model.domain.ProductCategory;
+import exposit.delivery.model.entity.Position;
 import exposit.delivery.model.entity.Product;
+import exposit.delivery.model.entity.Store;
 import exposit.delivery.repository.ProductRepository;
+import exposit.delivery.repository.StoreRepository;
 import exposit.delivery.service.ProductService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
+import static exposit.delivery.model.domain.ProductCategory.*;
 import static exposit.delivery.utils.BufferConsole.consoleStr;
 
 public class ProductServiceImpl implements ProductService {
@@ -22,9 +27,9 @@ public class ProductServiceImpl implements ProductService {
         logger.info(ProductRepository.productList);
         logger.info("Enter new name of product: ");
         String productName = consoleStr();
-        logger.info(Arrays.stream(ProductCategory.values()).collect(Collectors.toList()));
+        logger.info(Arrays.stream(values()).collect(Collectors.toList()));
         logger.info("Set category of product: ");
-        ProductCategory productCategory = ProductCategory.valueOf(consoleStr());
+        ProductCategory productCategory = valueOf(consoleStr());
         ProductRepository.productList.add(new Product(ProductRepository.getProductID() + 1, productName, productCategory));
         ProductRepository.setProductID(ProductRepository.getProductID() + 1);
     }
@@ -64,10 +69,26 @@ public class ProductServiceImpl implements ProductService {
         logger.info(ProductRepository.productList);
     }
 
+    @Override
+    public void searchProductByCategory() {
+        for (ProductCategory id : values()) {
+            logger.info("To find all products with category " + id + " enter " + id.getCode());
+        }
+        logger.info("Enter code of Category: ");
+        int id = Integer.parseInt(consoleStr());
+        List<Position> collect = StoreRepository.storeList.stream()
+                .map(Store::getPositionListAtStore)
+                .flatMap(positions -> positions.stream()
+                        .filter(position -> position.getProduct().getProductCategory().equals(getByCode(id))))
+                .collect(Collectors.toList());
+
+        logger.info(collect);
+    }
+
     private void changeCategoryProduct(Integer id) {
-        logger.info(Arrays.stream(ProductCategory.values()).collect(Collectors.toList()));
+        logger.info(Arrays.stream(values()).collect(Collectors.toList()));
         logger.info("Set category of product: ");
-        ProductRepository.productList.get(id).setProductCategory(ProductCategory.valueOf(consoleStr()));
+        ProductRepository.productList.get(id).setProductCategory(valueOf(consoleStr()));
     }
 
     private void changeProductName(Integer id) {
