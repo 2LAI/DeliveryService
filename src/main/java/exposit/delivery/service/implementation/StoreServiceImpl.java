@@ -1,10 +1,7 @@
 package exposit.delivery.service.implementation;
 
-import exposit.delivery.app.DemoDeliveryService;
 import exposit.delivery.model.entity.Position;
 import exposit.delivery.model.entity.Store;
-import exposit.delivery.repository.ProductRepository;
-import exposit.delivery.repository.StoreRepository;
 import exposit.delivery.service.StoreService;
 import exposit.delivery.utils.SaveJsonFile;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static exposit.delivery.app.DemoDeliveryService.*;
+import static exposit.delivery.repository.ProductRepository.*;
+import static exposit.delivery.repository.StoreRepository.*;
 import static exposit.delivery.utils.BufferConsole.consoleStr;
 
 public class StoreServiceImpl implements StoreService {
@@ -31,17 +31,17 @@ public class StoreServiceImpl implements StoreService {
         String Store = consoleStr();
 
         List<Position> positionCollection = new ArrayList<>();
-        Store newStore = new Store(StoreRepository.storeInDB, name, city, Store, positionCollection);
-        StoreRepository.storeInDB++;
+        Store newStore = new Store(storeInDB, name, city, Store, positionCollection);
+        storeInDB++;
 
-        StoreRepository.storeList.add(StoreRepository.storeList.size(), newStore);
+        storeList.add(storeList.size(), newStore);
         logger.info("Customer has been created successfully");
-        new SaveJsonFile().saveJson(StoreRepository.storeList);
+        new SaveJsonFile().saveStoreJson(storeList);
     }
 
     @Override
     public void updateStore() {
-        logger.info(StoreRepository.storeList);
+        logger.info(storeList);
         logger.info("Enter id of Store: ");
         Integer id = Integer.valueOf(consoleStr());
         logger.info("What are you want to change?\n 1 - Name of Store \n 2 - City of Store \n 3 - Address of Store " +
@@ -70,26 +70,26 @@ public class StoreServiceImpl implements StoreService {
                 removeStore();
                 break;
             case 7:
-                DemoDeliveryService.showMenu();
+                showMenu();
                 break;
         }
-        new SaveJsonFile().saveJson(StoreRepository.storeList);
+        new SaveJsonFile().saveStoreJson(storeList);
     }
 
     @Override
     public void removeStore() {
-        logger.info(StoreRepository.storeList);
+        logger.info(storeList);
         logger.info("Enter id of store for remove: ");
         int id = Integer.parseInt(consoleStr());
-        Store storeToRemove = StoreRepository.storeList.get(id);
-        StoreRepository.storeList.remove(storeToRemove);
+        Store storeToRemove = storeList.get(id);
+        storeList.remove(storeToRemove);
     }
 
     private void updatePositionList(Integer id) {
-        logger.info(StoreRepository.storeList.get(id).getPositionListAtStore());
+        logger.info(storeList.get(id).getPositionListAtStore());
         logger.info("Enter position id at the store: ");
         int positionOnStore = Integer.parseInt(consoleStr());
-        logger.info(StoreRepository.storeList.get(id).getPositionListAtStore().stream()
+        logger.info(storeList.get(id).getPositionListAtStore().stream()
                 .filter(position -> position.getId().equals(positionOnStore))
                 .collect(Collectors.toList()));
         logger.info("What do you want to change at this position?\n 1 - Change description\n2 - Change price\n3- Change quantity");
@@ -105,12 +105,13 @@ public class StoreServiceImpl implements StoreService {
                 changeQuantity(id, positionOnStore);
                 break;
         }
+        new SaveJsonFile().saveStoreJson(storeList);
     }
 
     private void changeQuantity(Integer id, Integer positionId) {
         logger.info("Enter new quantity: ");
         int newQuantity = Integer.parseInt(consoleStr());
-        StoreRepository.storeList.get(id).getPositionListAtStore().stream()
+        storeList.get(id).getPositionListAtStore().stream()
                 .filter(position -> position.getId().equals(positionId))
                 .findFirst().ifPresent(position -> position.setQuantity(newQuantity));
     }
@@ -118,7 +119,7 @@ public class StoreServiceImpl implements StoreService {
     private void changePrice(Integer id, Integer positionId) {
         logger.info("Enter new price: ");
         Double newPrice = Double.parseDouble(consoleStr());
-        StoreRepository.storeList.get(id).getPositionListAtStore().stream()
+        storeList.get(id).getPositionListAtStore().stream()
                 .filter(position -> position.getId().equals(positionId))
                 .findFirst().ifPresent(position -> position.setPrice(newPrice));
     }
@@ -126,13 +127,13 @@ public class StoreServiceImpl implements StoreService {
     private void changeDescription(Integer id, Integer positionId) {
         logger.info("Enter new description: ");
         String newDescription = consoleStr();
-        StoreRepository.storeList.get(id).getPositionListAtStore().stream()
+        storeList.get(id).getPositionListAtStore().stream()
                 .filter(position -> position.getId().equals(positionId))
                 .findFirst().ifPresent(position -> position.setDescription(newDescription));
     }
 
     private void addNewPosition(Integer id) {
-        logger.info(ProductRepository.productList);
+        logger.info(productList);
         logger.info("Enter id of product to add at a position: ");
         String idOfProduct = consoleStr();
         logger.info("Enter description of product to add at a position: ");
@@ -141,10 +142,10 @@ public class StoreServiceImpl implements StoreService {
         String priceOfProduct = consoleStr();
         logger.info("Enter quantity of product to add at a position: ");
         String quantityOfProduct = consoleStr();
-        StoreRepository.storeList.get(id).getPositionListAtStore()
-                .add(new Position(StoreRepository.numberOfPositionInDB, ProductRepository.productList.get(Integer.parseInt(idOfProduct)), descriptionOfProduct,
+        storeList.get(id).getPositionListAtStore()
+                .add(new Position(numberOfPositionInDB, productList.get(Integer.parseInt(idOfProduct)), descriptionOfProduct,
                         Double.parseDouble(priceOfProduct), Integer.parseInt(quantityOfProduct)));
-        StoreRepository.numberOfPositionInDB++;
+        numberOfPositionInDB++;
         logger.info("Position has been successfully added");
         logger.info("Do you want to add a new position at this Store? 1 - yes, 0 - no");
         int decision = Integer.parseInt(consoleStr());
@@ -156,18 +157,18 @@ public class StoreServiceImpl implements StoreService {
     private void changeAddressOfStore(Integer id) {
         logger.info("Enter new address for Store: ");
         String newAddressForStore = consoleStr();
-        StoreRepository.storeList.get(id).setName(newAddressForStore);
+        storeList.get(id).setName(newAddressForStore);
     }
 
     private void changeCityOfStore(Integer id) {
         logger.info("Enter new City for Store: ");
         String newCityForStore = consoleStr();
-        StoreRepository.storeList.get(id).setName(newCityForStore);
+        storeList.get(id).setName(newCityForStore);
     }
 
     private void changeStoreName(Integer id) {
         logger.info("Enter new Store name: ");
         String newStoreName = consoleStr();
-        StoreRepository.storeList.get(id).setName(newStoreName);
+        storeList.get(id).setName(newStoreName);
     }
 }
