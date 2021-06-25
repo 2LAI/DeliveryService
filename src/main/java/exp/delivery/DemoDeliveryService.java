@@ -1,4 +1,4 @@
-package exp.delivery.app;
+package exp.delivery;
 
 import exp.delivery.repository.CourierRepository;
 import exp.delivery.repository.CustomerRepository;
@@ -17,12 +17,7 @@ public class DemoDeliveryService {
     private static final Logger logger = LogManager.getLogger(CustomerServiceImpl.class);
 
     public static void main(String[] args) {
-
-        ProductRepository.initializeProductRepository();
-        StoreRepository.initializeStoreRepository();
-        CustomerRepository.initializeCustomerRepository();
-        CourierRepository.initializeCourierRepository();
-
+        initRepository();
         showMenu();
     }
 
@@ -94,6 +89,14 @@ public class DemoDeliveryService {
                 break;
         }
         showMenu();
-
     }
+
+    private static void initRepository() {
+        ProductRepository.initializeProductRepository();
+        StoreRepository.initializeStoreRepository();
+        CustomerRepository.initializeCustomerRepository();
+        CourierRepository.initializeCourierRepository();
+    }
+
+
 }

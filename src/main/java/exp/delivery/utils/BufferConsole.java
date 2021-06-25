@@ -14,6 +14,11 @@ public class BufferConsole {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            bufferedReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return str;
     }
 }

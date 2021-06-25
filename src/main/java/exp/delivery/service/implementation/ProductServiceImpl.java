@@ -1,7 +1,6 @@
 package exp.delivery.service.implementation;
 
 import exp.delivery.model.entity.Position;
-import exp.delivery.utils.BufferConsole;
 import exp.delivery.model.domain.ProductCategory;
 import exp.delivery.model.entity.Product;
 import exp.delivery.model.entity.Store;
@@ -15,10 +14,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static exp.delivery.app.DemoDeliveryService.*;
+import static exp.delivery.DemoDeliveryService.*;
 import static exp.delivery.model.domain.ProductCategory.*;
 import static exp.delivery.repository.ProductRepository.*;
 import static exp.delivery.repository.StoreRepository.*;
+import static exp.delivery.utils.BufferConsole.*;
 
 public class ProductServiceImpl implements ProductService {
 
@@ -28,10 +28,10 @@ public class ProductServiceImpl implements ProductService {
     public void createNewProduct() {
         logger.info(productList);
         logger.info("Enter new name of product: ");
-        String productName = BufferConsole.consoleStr();
+        String productName = consoleStr();
         logger.info(Arrays.stream(values()).collect(Collectors.toList()));
         logger.info("Set category of product: ");
-        ProductCategory productCategory = valueOf(BufferConsole.consoleStr());
+        ProductCategory productCategory = valueOf(consoleStr());
         productList.add(new Product(getProductID() + 1, productName, productCategory));
         setProductID(getProductID() + 1);
         new SaveJsonFile().saveProductJson(productList);
@@ -41,11 +41,11 @@ public class ProductServiceImpl implements ProductService {
     public void updateProduct() {
         logger.info(productList);
         logger.info("Enter id of Product to change: ");
-        Integer id = Integer.valueOf(BufferConsole.consoleStr());
+        Integer id = Integer.valueOf(consoleStr());
         logger.info("What are you want to change?\n 1 - Name of the product \n" +
                 "2 - Category of the product \n 3 - Back in main menu ");
 
-        int changeField = Integer.parseInt(BufferConsole.consoleStr());
+        int changeField = Integer.parseInt(consoleStr());
 
         switch (changeField) {
 
@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     public void removeProduct() {
         logger.info(productList);
         logger.info("Enter id of Product to remove: ");
-        int id = Integer.parseInt(BufferConsole.consoleStr());
+        int id = Integer.parseInt(consoleStr());
         Product productToRemove = productList.get(id);
         productList.remove(productToRemove);
         logger.info("Product with" + id + " has been successfully removed");
@@ -93,13 +93,13 @@ public class ProductServiceImpl implements ProductService {
     private void changeCategoryProduct(Integer id) {
         logger.info(Arrays.stream(values()).collect(Collectors.toList()));
         logger.info("Set category of product: ");
-        productList.get(id).setProductCategory(valueOf(BufferConsole.consoleStr()));
+        productList.get(id).setProductCategory(valueOf(consoleStr()));
     }
 
     private void changeProductName(Integer id) {
         logger.info(productList.get(id).getProductName());
         logger.info("Set new name of the product: ");
-        String newName = BufferConsole.consoleStr();
+        String newName = consoleStr();
         productList.get(id).setProductName(newName);
     }
 
@@ -108,6 +108,6 @@ public class ProductServiceImpl implements ProductService {
             logger.info(s + id + " enter " + id.getCode());
         }
         logger.info("Enter code of Category: ");
-        return Integer.parseInt(BufferConsole.consoleStr());
+        return Integer.parseInt(consoleStr());
     }
 }

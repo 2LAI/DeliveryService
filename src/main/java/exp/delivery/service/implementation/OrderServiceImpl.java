@@ -21,6 +21,7 @@ import static exp.delivery.repository.CourierRepository.*;
 import static exp.delivery.repository.CustomerRepository.*;
 import static exp.delivery.repository.OrderRepository.*;
 import static exp.delivery.repository.StoreRepository.*;
+import static exp.delivery.utils.BufferConsole.*;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -29,21 +30,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void createOrder() {
 
-        double sumValue = 0.0;
+        Double sumValue = 0.0;
         boolean addNewPosition = true;
         List<Position> productsListOrder = new ArrayList<>();
 
         logger.info(storeList);
         logger.info("Enter id of store for order: ");
-        int idOfStore = Integer.parseInt(BufferConsole.consoleStr());
+        int idOfStore = Integer.parseInt(consoleStr());
 
         while (addNewPosition) {
             logger.info(storeList.get(idOfStore));
             logger.info("Enter id of position for order: ");
-            int idOfPositionToOrder = Integer.parseInt(BufferConsole.consoleStr());
+            int idOfPositionToOrder = Integer.parseInt(consoleStr());
             sumValue = addPositionToOrder(sumValue, productsListOrder, idOfStore, idOfPositionToOrder);
             logger.info("Do you want add a new position? 1 - yes, 0 - no");
-            int decision = Integer.parseInt(BufferConsole.consoleStr());
+            int decision = Integer.parseInt(consoleStr());
             if (decision == 0) {
                 addNewPosition = false;
             }
@@ -52,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
             logger.info("To choose type of payment: " + id + " enter " + id.getCode());
         }
         logger.info("Enter id of payment types: ");
-        int idOfPaymentType = Integer.parseInt(BufferConsole.consoleStr());
+        int idOfPaymentType = Integer.parseInt(consoleStr());
 
         orderList.add(new Order(getOrderCount(),
                 //current user
@@ -70,9 +71,8 @@ public class OrderServiceImpl implements OrderService {
     private Double addPositionToOrder(Double sumValue, List<Position> productsListOrder, int idOfStore, int idOfPositionToOrder) {
         Position positionToOrder = addPos(idOfStore, idOfPositionToOrder);
         productsListOrder.add(positionToOrder);
-
         Double currentValue = getProductPrice(idOfStore, idOfPositionToOrder);
-        sumValue += currentValue;
+        sumValue = sumValue + currentValue;
         return sumValue;
     }
 
@@ -93,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder() {
         logger.info(orderList);
         logger.info("Enter id of order to delete: ");
-        int idOfOrder = Integer.parseInt(BufferConsole.consoleStr());
+        int idOfOrder = Integer.parseInt(consoleStr());
         orderList.remove(idOfOrder);
         new SaveJsonFile().saveOrderJson(orderList);
     }
