@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -15,6 +16,17 @@ public class Order {
     private Customer customer;
     private Store store;
     private Payment payment;
-    private Collection<Product> productOrderList;
+    private Collection<Position> productOrderList;
     private Courier courier;
+
+    @Override
+    public String toString() {
+        return "\nOrder " +
+                "id=" + id +
+                "customer=" + customer + "\n" +
+                "store=" + store.getName() + "\n" +
+                "payment=" + payment + "\n" +
+                "productOrderList=" + productOrderList + "\n" +
+                "courier=" + courier + "\n";
+    }
 }

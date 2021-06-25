@@ -10,6 +10,8 @@ public class ProductRepository {
 
     public static List<Product> productList = new ArrayList<>();
 
+    private static Integer productID = 5;
+
     public static void initializeProductRepository() {
 
         productList.add(new Product(0, "Milk 3.2%", ProductCategory.MILK));
@@ -18,8 +20,14 @@ public class ProductRepository {
         productList.add(new Product(3, "Pasta", ProductCategory.BAKERY));
         productList.add(new Product(4, "Banana", ProductCategory.FRUITS));
         productList.add(new Product(5, "Tomato", ProductCategory.VEGETABLES));
-
     }
 
+    public static Integer getProductID() {
+        return productID;
+    }
+
+    public static void setProductID(Integer productID) {
+        ProductRepository.productID = productID;
+    }
 
 }

@@ -11,7 +11,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +18,7 @@ import static exposit.delivery.utils.BufferConsole.consoleStr;
 
 public class StoreServiceImpl implements StoreService {
 
-    private static final Logger logger = LogManager.getLogger(CustomerServiceImpl.class);
+    private static final Logger logger = LogManager.getLogger(StoreServiceImpl.class);
 
     @Override
     public void createNewStore() {
@@ -68,21 +67,27 @@ public class StoreServiceImpl implements StoreService {
                 addNewPosition(id);
                 break;
             case 6:
+                removeStore();
+                break;
+            case 7:
                 DemoDeliveryService.showMenu();
                 break;
         }
         new SaveJsonFile().saveJson(StoreRepository.storeList);
-
     }
 
     @Override
     public void removeStore() {
-
+        logger.info(StoreRepository.storeList);
+        logger.info("Enter id of store for remove: ");
+        int id = Integer.parseInt(consoleStr());
+        Store storeToRemove = StoreRepository.storeList.get(id);
+        StoreRepository.storeList.remove(storeToRemove);
     }
 
     private void updatePositionList(Integer id) {
         logger.info(StoreRepository.storeList.get(id).getPositionListAtStore());
-        logger.info("Enter position of store: ");
+        logger.info("Enter position id at the store: ");
         int positionOnStore = Integer.parseInt(consoleStr());
         logger.info(StoreRepository.storeList.get(id).getPositionListAtStore().stream()
                 .filter(position -> position.getId().equals(positionOnStore))
@@ -91,10 +96,10 @@ public class StoreServiceImpl implements StoreService {
         int changeField = Integer.parseInt(consoleStr());
         switch (changeField) {
             case 1:
-                changeDescription(id);
+                changeDescription(id, positionOnStore);
                 break;
             case 2:
-                changePrice(id);
+                changePrice(id, positionOnStore);
                 break;
             case 3:
                 changeQuantity(id, positionOnStore);
@@ -110,12 +115,20 @@ public class StoreServiceImpl implements StoreService {
                 .findFirst().ifPresent(position -> position.setQuantity(newQuantity));
     }
 
-    private void changePrice(Integer id) {
-
+    private void changePrice(Integer id, Integer positionId) {
+        logger.info("Enter new price: ");
+        Double newPrice = Double.parseDouble(consoleStr());
+        StoreRepository.storeList.get(id).getPositionListAtStore().stream()
+                .filter(position -> position.getId().equals(positionId))
+                .findFirst().ifPresent(position -> position.setPrice(newPrice));
     }
 
-    private void changeDescription(Integer id) {
-
+    private void changeDescription(Integer id, Integer positionId) {
+        logger.info("Enter new description: ");
+        String newDescription = consoleStr();
+        StoreRepository.storeList.get(id).getPositionListAtStore().stream()
+                .filter(position -> position.getId().equals(positionId))
+                .findFirst().ifPresent(position -> position.setDescription(newDescription));
     }
 
     private void addNewPosition(Integer id) {
