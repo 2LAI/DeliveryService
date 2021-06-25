@@ -14,7 +14,7 @@ public enum PaymentTypes {
     private final Integer code;
     private final String description;
 
-     PaymentTypes(int code, String description) {
+    PaymentTypes(int code, String description) {
         this.code = code;
         this.description = description;
     }

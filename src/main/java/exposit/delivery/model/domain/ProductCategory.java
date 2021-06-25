@@ -23,7 +23,7 @@ public enum ProductCategory {
         this.description = description;
     }
 
-    ProductCategory(int code, String description,SubProductCategory subProductCategory) {
+    ProductCategory(int code, String description, SubProductCategory subProductCategory) {
         this.code = code;
         this.description = description;
     }
@@ -46,7 +46,6 @@ public enum ProductCategory {
 
         return result.get();
     }
-
 
 
 }

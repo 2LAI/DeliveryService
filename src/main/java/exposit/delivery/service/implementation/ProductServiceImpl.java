@@ -1,12 +1,9 @@
 package exposit.delivery.service.implementation;
 
-import exposit.delivery.app.DemoDeliveryService;
 import exposit.delivery.model.domain.ProductCategory;
 import exposit.delivery.model.entity.Position;
 import exposit.delivery.model.entity.Product;
 import exposit.delivery.model.entity.Store;
-import exposit.delivery.repository.ProductRepository;
-import exposit.delivery.repository.StoreRepository;
 import exposit.delivery.service.ProductService;
 import exposit.delivery.utils.SaveJsonFile;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +16,6 @@ import java.util.stream.Collectors;
 
 import static exposit.delivery.app.DemoDeliveryService.*;
 import static exposit.delivery.model.domain.ProductCategory.*;
-import static exposit.delivery.repository.OrderRepository.orderList;
 import static exposit.delivery.repository.ProductRepository.*;
 import static exposit.delivery.repository.StoreRepository.*;
 import static exposit.delivery.utils.BufferConsole.consoleStr;
