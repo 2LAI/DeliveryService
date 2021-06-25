@@ -36,7 +36,7 @@ public class StoreServiceImpl implements StoreService {
 
         storeList.add(storeList.size(), newStore);
         logger.info("Customer has been created successfully");
-        new SaveJsonFile().saveCustomerJson(storeList);
+        new SaveJsonFile().saveStoreJson(storeList);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class StoreServiceImpl implements StoreService {
                 showMenu();
                 break;
         }
-        new SaveJsonFile().saveCustomerJson(storeList);
+        new SaveJsonFile().saveStoreJson(storeList);
     }
 
     @Override
@@ -105,6 +105,7 @@ public class StoreServiceImpl implements StoreService {
                 changeQuantity(id, positionOnStore);
                 break;
         }
+        new SaveJsonFile().saveStoreJson(storeList);
     }
 
     private void changeQuantity(Integer id, Integer positionId) {
