@@ -1,6 +1,7 @@
 package exposit.delivery.model.entity;
 
 import exposit.delivery.model.domain.ProductCategory;
+import exposit.delivery.model.domain.SubProductCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,6 @@ public class Product {
                 "| productName = " + productName + "\n" +
                 "| productCategory = " + productCategory + "\n";
     }
+
+
 }

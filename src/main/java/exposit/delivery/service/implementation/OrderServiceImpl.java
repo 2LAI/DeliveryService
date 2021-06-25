@@ -2,12 +2,9 @@ package exposit.delivery.service.implementation;
 
 import exposit.delivery.model.domain.PaymentTypes;
 import exposit.delivery.model.entity.*;
-import exposit.delivery.repository.CourierRepository;
-import exposit.delivery.repository.CustomerRepository;
-import exposit.delivery.repository.OrderRepository;
-import exposit.delivery.repository.StoreRepository;
 import exposit.delivery.service.OrderService;
 import exposit.delivery.utils.DateUtils;
+import exposit.delivery.utils.SaveJsonFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,6 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static exposit.delivery.model.domain.PaymentTypes.*;
+import static exposit.delivery.repository.CourierRepository.*;
+import static exposit.delivery.repository.CustomerRepository.*;
+import static exposit.delivery.repository.OrderRepository.*;
+import static exposit.delivery.repository.StoreRepository.*;
 import static exposit.delivery.utils.BufferConsole.consoleStr;
 
 public class OrderServiceImpl implements OrderService {
@@ -24,17 +26,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void createOrder() {
-        OrderRepository orderRepository = new OrderRepository();
+
         double sumValue = 0.0;
         boolean addNewPosition = true;
         List<Position> productsListOrder = new ArrayList<>();
 
-        logger.info(StoreRepository.storeList);
+        logger.info(storeList);
         logger.info("Enter id of store for order: ");
         int idOfStore = Integer.parseInt(consoleStr());
 
         while (addNewPosition) {
-            logger.info(StoreRepository.storeList.get(idOfStore));
+            logger.info(storeList.get(idOfStore));
             logger.info("Enter id of position for order: ");
             int idOfPositionToOrder = Integer.parseInt(consoleStr());
             sumValue = addPositionToOrder(sumValue, productsListOrder, idOfStore, idOfPositionToOrder);
@@ -44,22 +46,23 @@ public class OrderServiceImpl implements OrderService {
                 addNewPosition = false;
             }
         }
-        for (PaymentTypes id : PaymentTypes.values()) {
+        for (PaymentTypes id : values()) {
             logger.info("To choose type of payment: " + id + " enter " + id.getCode());
         }
         logger.info("Enter id of payment types: ");
         int idOfPaymentType = Integer.parseInt(consoleStr());
 
-        OrderRepository.orderList.add(new Order(orderRepository.getOrderCount(),
+        orderList.add(new Order(getOrderCount(),
                 //current user
-                CustomerRepository.customerList.get(0),
-                StoreRepository.storeList.get(idOfStore),
-                new Payment(CustomerRepository.customerList.get(0),
+                customerList.get(0),
+                storeList.get(idOfStore),
+                new Payment(customerList.get(0),
                         DateUtils.asDate(LocalDate.now()), sumValue,
-                        PaymentTypes.getByCode(idOfPaymentType)),
+                        getByCode(idOfPaymentType)),
                 productsListOrder,
-                CourierRepository.courierList.get(0)));
-        orderRepository.setOrderCount(orderRepository.getOrderCount() + 1);
+                courierList.get(0)));
+        setOrderCount(getOrderCount() + 1);
+        new SaveJsonFile().saveOrderJson(orderList);
     }
 
     private Double addPositionToOrder(Double sumValue, List<Position> productsListOrder, int idOfStore, int idOfPositionToOrder) {
@@ -72,13 +75,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private static Double getProductPrice(int idOfStore, int idOfPositionToOrder) {
-        return StoreRepository.storeList.get(idOfStore).getPositionListAtStore().stream()
+        return storeList.get(idOfStore).getPositionListAtStore().stream()
                 .filter(position -> position.getId().equals(idOfPositionToOrder))
                 .findFirst().get().getPrice();
     }
 
     private static Position addPos(int idOfStore, int idOfPositionToOrder) {
-        List<Position> currentPositionToOrder = StoreRepository.storeList.get(idOfStore).getPositionListAtStore().stream()
+        List<Position> currentPositionToOrder = storeList.get(idOfStore).getPositionListAtStore().stream()
                 .filter(position -> position.getId().equals(idOfPositionToOrder))
                 .collect(Collectors.toList());
         return currentPositionToOrder.get(0);
@@ -86,14 +89,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder() {
-        logger.info(OrderRepository.orderList);
+        logger.info(orderList);
         logger.info("Enter id of order to delete: ");
         int idOfOrder = Integer.parseInt(consoleStr());
-        OrderRepository.orderList.remove(idOfOrder);
+        orderList.remove(idOfOrder);
+        new SaveJsonFile().saveOrderJson(orderList);
     }
 
     @Override
     public void showOrder() {
-        logger.info(OrderRepository.orderList);
+        logger.info(orderList);
     }
 }

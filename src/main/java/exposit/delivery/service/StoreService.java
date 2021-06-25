@@ -7,4 +7,5 @@ public interface StoreService {
     void updateStore();
 
     void removeStore();
+
 }
