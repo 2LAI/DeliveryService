@@ -14,5 +14,4 @@ public class CourierRepository {
         courierList.add(new Courier(Customer.counter, "Alexey", "Tihomorov", "CRM1247"));
         courierList.add(new Courier(Customer.counter, "Serhey", "Potapov", "FRG8517"));
     }
-
 }

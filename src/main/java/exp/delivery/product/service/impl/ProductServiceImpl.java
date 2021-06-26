@@ -49,6 +49,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void showProducts() {
+        logger.info(productList);
+    }
+
+    @Override
     public void updateProduct() {
         logger.info(productList);
 

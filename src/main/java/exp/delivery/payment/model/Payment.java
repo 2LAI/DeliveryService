@@ -1,7 +1,6 @@
 package exp.delivery.payment.model;
 
 import exp.delivery.customer.model.Customer;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

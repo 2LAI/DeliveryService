@@ -9,10 +9,10 @@ import exp.delivery.customer.service.impl.CustomerServiceImpl;
 import exp.delivery.order.service.impl.OrderServiceImpl;
 import exp.delivery.product.service.impl.ProductServiceImpl;
 import exp.delivery.store.service.impl.StoreServiceImpl;
-import exp.delivery.utils.BufferConsole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static exp.delivery.utils.BufferConsole.*;
 import static exp.delivery.utils.Constants.*;
 
 public class DemoDeliveryService {
@@ -26,28 +26,31 @@ public class DemoDeliveryService {
 
     public static void showMenu() {
 
-        logger.info("\n1 - Create new customer\n" +
-                "2 - Update customer information\n" +
-                "3 - Delete customer\n" +
-                "4 - Create new store\n" +
-                "5 - Update store\n" +
-                "6 - Remove store\n" +
-                "7 - Create new product\n" +
-                "8 - Update product\n" +
-                "9 - Remove product\n" +
-                "10 - Find product by category\n" +
-                "11 - Sort product by price\n" +
-                "12 - Create order\n" +
-                "13 - Show orders\n" +
-                "14 - Delete order\n" +
-                "Enter number of operation:");
-
-        String menuItem = BufferConsole.readline();
-
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         StoreServiceImpl storeService = new StoreServiceImpl();
         ProductServiceImpl productService = new ProductServiceImpl();
         OrderServiceImpl orderService = new OrderServiceImpl();
+
+        logger.info("\n1 - Create new customer\n" +
+                "2 - Update customer information\n" +
+                "3 - Show all customers\n" +
+                "4 - Delete customer\n" +
+                "\n5 - Create new store\n" +
+                "6 - Update store\n" +
+                "7 - Show all stores\n" +
+                "8 - Remove store\n" +
+                "\n9 - Create new product\n" +
+                "10 - Update product\n" +
+                "11 - Show all products\n" +
+                "12 - Remove product\n" +
+                "13 - Find product by category\n" +
+                "14 - Sort product by price\n" +
+                "\n15 - Create order\n" +
+                "16 - Show orders\n" +
+                "17 - Delete order\n" +
+                "Enter number of operation:");
+
+        var menuItem = readline();
 
         switch (menuItem) {
             case ONE:
@@ -57,39 +60,48 @@ public class DemoDeliveryService {
                 customerService.updateCustomer();
                 break;
             case THREE:
-                customerService.removeCustomer();
+                customerService.showCustomers();
                 break;
             case FOUR:
-                storeService.createNewStore();
+                customerService.removeCustomer();
                 break;
             case FIVE:
-                storeService.updateStore();
+                storeService.createNewStore();
                 break;
             case SIX:
-                storeService.removeStore();
+                storeService.updateStore();
                 break;
             case SEVEN:
-                productService.createNewProduct();
+                storeService.showStores();
                 break;
             case EIGHT:
-                productService.updateProduct();
+                storeService.removeStore();
                 break;
             case NINE:
-                productService.removeProduct();
+                productService.createNewProduct();
                 break;
             case TEN:
-                logger.info(productService.searchProductByCategory());
+                productService.updateProduct();
                 break;
             case ELEVEN:
-                productService.sortProductByPrice();
+                productService.showProducts();
                 break;
             case TWELVE:
-                orderService.createOrder();
+                productService.removeProduct();
                 break;
             case THIRTEEN:
-                orderService.showOrder();
+                logger.info(productService.searchProductByCategory());
                 break;
             case FOURTEEN:
+                productService.sortProductByPrice();
+                break;
+            case FIFTEEN:
+                orderService.createOrder();
+                break;
+            case SIXTEEN:
+                orderService.showOrders();
+                break;
+            case SEVENTEEN:
                 orderService.deleteOrder();
                 break;
             default:
@@ -104,6 +116,4 @@ public class DemoDeliveryService {
         CustomerRepository.initializeCustomerRepository();
         CourierRepository.initializeCourierRepository();
     }
-
-
 }

@@ -2,7 +2,6 @@ package exp.delivery.utils;
 
 public class Constants {
 
-    public static final String ZERO = "0";
     public static final String ONE = "1";
     public static final String TWO = "2";
     public static final String THREE = "3";
@@ -17,6 +16,9 @@ public class Constants {
     public static final String TWELVE = "12";
     public static final String THIRTEEN = "13";
     public static final String FOURTEEN = "14";
+    public static final String FIFTEEN = "15";
+    public static final String SIXTEEN = "16";
+    public static final String SEVENTEEN = "17";
     public static final String PATHNAME_UPDATE_ORDER = "src/main/resources/updateOrder.json";
     public static final String PATHNAME_UPDATE_CUSTOMER = "src/main/resources/updateCustomer.json";
     public static final String PATHNAME_UPDATE_PRODUCT = "src/main/resources/updateProduct.json";

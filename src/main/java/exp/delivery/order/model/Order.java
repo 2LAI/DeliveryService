@@ -23,6 +23,7 @@ public class Order {
     private Collection<Position> productOrderList;
     private Courier courier;
 
+    //for comfort interface usage
     @Override
     public String toString() {
         return "\nOrder " +
