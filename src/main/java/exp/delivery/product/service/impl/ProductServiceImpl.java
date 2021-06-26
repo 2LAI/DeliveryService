@@ -2,7 +2,7 @@ package exp.delivery.product.service.impl;
 
 import exp.delivery.utils.exceptions.IncorrectInputException;
 import exp.delivery.product.service.ProductService;
-import exp.delivery.store.model.Position;
+import exp.delivery.position.model.Position;
 import exp.delivery.product.model.ProductCategory;
 import exp.delivery.product.model.Product;
 import exp.delivery.store.model.Store;
@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
     private void changeCategoryProduct(Integer id) {
         logger.info(Arrays.stream(values()).collect(Collectors.toList()));
         logger.info("Set category of product: ");
-        productList.get(id).setProductCategory(valueOf(readline()));
+        productList.get(id). setProductCategory(valueOf(readline()));
     }
 
     private void changeProductName(Integer id) {
@@ -108,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
         productList.get(id).setProductName(newName);
     }
 
-    private int chooseCategory() {
+    private Integer chooseCategory() {
         for (ProductCategory id : values()) {
             logger.info("To find all products with category " + id + " enter " + id.getCode());
         }

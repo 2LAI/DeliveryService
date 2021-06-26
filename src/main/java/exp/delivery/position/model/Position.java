@@ -1,4 +1,4 @@
-package exp.delivery.store.model;
+package exp.delivery.position.model;
 
 import exp.delivery.product.model.Product;
 import lombok.Data;

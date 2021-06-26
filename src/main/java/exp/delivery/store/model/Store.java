@@ -1,5 +1,6 @@
 package exp.delivery.store.model;
 
+import exp.delivery.position.model.Position;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

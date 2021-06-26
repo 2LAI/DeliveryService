@@ -11,6 +11,7 @@ public class ProductRepository {
     public static List<Product> productList = new ArrayList<>();
 
     public static void initializeProductRepository() {
+
         productList.add(new Product(Product.counter, "Milk 3.2%", ProductCategory.MILK));
         productList.add(new Product(Product.counter, "Milk 2.2%", ProductCategory.MILK));
         productList.add(new Product(Product.counter, "Orange Juice", ProductCategory.MILK));
