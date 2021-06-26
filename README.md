@@ -5,7 +5,7 @@
 В консоли появится список доступных операций. Чтобы выбрать операцию для запуска необходимо ввести её id номер. Далее следовать инструкции в консоли.
 
 ### Архитектура приложения:
-![DeliveryService (1)](https://user-images.githubusercontent.com/76948163/123489625-103fa680-d61b-11eb-9ddf-754ab32d45a3.png)
+![DeliveryService (2)](https://user-images.githubusercontent.com/76948163/123526377-1cda0280-d6e0-11eb-990c-0bac0da0f789.png)
 
 ### Тестовове задание:
 
