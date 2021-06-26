@@ -1,16 +1,19 @@
 package exp.delivery;
 
-import exp.delivery.repository.CourierRepository;
-import exp.delivery.repository.CustomerRepository;
-import exp.delivery.repository.ProductRepository;
-import exp.delivery.repository.StoreRepository;
-import exp.delivery.service.implementation.CustomerServiceImpl;
-import exp.delivery.service.implementation.OrderServiceImpl;
-import exp.delivery.service.implementation.ProductServiceImpl;
-import exp.delivery.service.implementation.StoreServiceImpl;
+import exp.delivery.utils.exceptions.IncorrectInputException;
+import exp.delivery.courier.repository.CourierRepository;
+import exp.delivery.customer.repository.CustomerRepository;
+import exp.delivery.product.repository.ProductRepository;
+import exp.delivery.store.repository.StoreRepository;
+import exp.delivery.customer.service.impl.CustomerServiceImpl;
+import exp.delivery.order.service.impl.OrderServiceImpl;
+import exp.delivery.product.service.impl.ProductServiceImpl;
+import exp.delivery.store.service.impl.StoreServiceImpl;
 import exp.delivery.utils.BufferConsole;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static exp.delivery.utils.Constants.*;
 
 public class DemoDeliveryService {
 
@@ -38,55 +41,59 @@ public class DemoDeliveryService {
                 "13 - Show orders\n" +
                 "14 - Delete order\n" +
                 "Enter number of operation:");
-        String menuItem = BufferConsole.consoleStr();
+
+        String menuItem = BufferConsole.readline();
+
         CustomerServiceImpl customerService = new CustomerServiceImpl();
         StoreServiceImpl storeService = new StoreServiceImpl();
         ProductServiceImpl productService = new ProductServiceImpl();
         OrderServiceImpl orderService = new OrderServiceImpl();
 
         switch (menuItem) {
-            case "1":
+            case ONE:
                 customerService.createNewCustomer();
                 break;
-            case "2":
+            case TWO:
                 customerService.updateCustomer();
                 break;
-            case "3":
+            case THREE:
                 customerService.removeCustomer();
                 break;
-            case "4":
+            case FOUR:
                 storeService.createNewStore();
                 break;
-            case "5":
+            case FIVE:
                 storeService.updateStore();
                 break;
-            case "6":
+            case SIX:
                 storeService.removeStore();
                 break;
-            case "7":
+            case SEVEN:
                 productService.createNewProduct();
                 break;
-            case "8":
+            case EIGHT:
                 productService.updateProduct();
                 break;
-            case "9":
+            case NINE:
                 productService.removeProduct();
                 break;
-            case "10":
+            case TEN:
                 logger.info(productService.searchProductByCategory());
                 break;
-            case "11":
+            case ELEVEN:
                 productService.sortProductByPrice();
                 break;
-            case "12":
+            case TWELVE:
                 orderService.createOrder();
                 break;
-            case "13":
+            case THIRTEEN:
                 orderService.showOrder();
                 break;
-            case "14":
+            case FOURTEEN:
                 orderService.deleteOrder();
                 break;
+            default:
+                throw new IncorrectInputException("Incorrect choice");
         }
         showMenu();
     }
