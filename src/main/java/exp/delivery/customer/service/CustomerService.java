@@ -4,8 +4,10 @@ public interface CustomerService {
 
     void createNewCustomer();
 
+    void removeCustomer();
+
     void updateCustomer();
 
-    void removeCustomer();
+    void showCustomers();
 
 }

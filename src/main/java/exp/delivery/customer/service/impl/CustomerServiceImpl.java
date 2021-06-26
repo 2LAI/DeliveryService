@@ -52,6 +52,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public void showCustomers() {
+        logger.info(customerList);
+    }
+
+    @Override
     public void removeCustomer() {
         logger.info(customerList);
         logger.info("Enter user id to remove: ");

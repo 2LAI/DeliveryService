@@ -36,7 +36,7 @@ public class StoreServiceImpl implements StoreService {
         Store newStore = new Store(Store.counter, name, city, store, positionCollection);
 
         storeList.add(storeList.size(), newStore);
-        logger.info("Customer has been created successfully");
+        logger.info("Store has been created successfully");
         new SaveJsonFile().saveStoreJson(storeList);
     }
 
@@ -64,6 +64,11 @@ public class StoreServiceImpl implements StoreService {
 
         Store storeToRemove = storeList.get(id);
         storeList.remove(storeToRemove);
+    }
+
+    @Override
+    public void showStores() {
+        logger.info(storeList);
     }
 
     private void updatePositionList(Integer id) {

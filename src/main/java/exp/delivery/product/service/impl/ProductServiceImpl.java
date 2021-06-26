@@ -10,6 +10,7 @@ import exp.delivery.utils.SaveJsonFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -27,15 +28,29 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void createNewProduct() {
-        logger.info(productList);
 
+        var addNewPosition = true;
+        List<ProductCategory> productCategories = new ArrayList<>();
         var productName = getProductName();
 
-        var productCategory = getProductCategory();
+        while (addNewPosition) {
+            var productCategory = getProductCategory();
+            productCategories.add(productCategory);
+            logger.info("Do you want add a new position? 1 - yes, 0 - no");
+            var decision = Integer.parseInt(readline());
+            if (decision == 0) {
+                addNewPosition = false;
+            }
+        }
 
-        productList.add(new Product(Product.counter, productName, productCategory));
+        productList.add(new Product(Product.counter, productName, productCategories));
 
         new SaveJsonFile().saveProductJson(productList);
+    }
+
+    @Override
+    public void showProducts() {
+        logger.info(productList);
     }
 
     @Override
@@ -71,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
         return storeList.stream()
                 .map(Store::getPositionListAtStore)
                 .flatMap(positions -> positions.stream()
-                        .filter(position -> position.getProduct().getProductCategory().equals(getByCode(id))))
+                        .filter(position -> position.getProduct().getProductCategories().contains(getByCode(id))))
                 .collect(Collectors.toList());
     }
 
@@ -84,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private ProductCategory getProductCategory() {
-        logger.info(Arrays.stream(values()).collect(Collectors.toList()));
+        logger.info(Arrays.stream(ProductCategory.values()).collect(Collectors.toList()));
 
         logger.info("Set category of product: ");
         return valueOf(readline());
@@ -96,9 +111,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void changeCategoryProduct(Integer id) {
-        logger.info(Arrays.stream(values()).collect(Collectors.toList()));
+        logger.info("What category need to change?");
+        var searchValue = chooseCategory();
+
         logger.info("Set category of product: ");
-        productList.get(id). setProductCategory(valueOf(readline()));
+        var needValue = chooseCategory();
+
+        Product product = productList.get(id);
+
+        var filteredCategories = product.getProductCategories().stream()
+                .filter(it -> !it.equals(getByCode(searchValue)))
+                .collect(Collectors.toList());
+
+        filteredCategories.add(getByCode(needValue));
+
+        product.setProductCategories(filteredCategories);
+
+        productList.set(id, product);
     }
 
     private void changeProductName(Integer id) {
@@ -109,11 +138,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Integer chooseCategory() {
-        for (ProductCategory id : values()) {
-            logger.info("To find all products with category " + id + " enter " + id.getCode());
-        }
-
-        logger.info("Enter code of Category: ");
+        Arrays.stream(ProductCategory.values())
+                .forEach(it -> logger.info("To category: " + it + " enter " + it.getCode()));
         return Integer.parseInt(readline());
     }
 

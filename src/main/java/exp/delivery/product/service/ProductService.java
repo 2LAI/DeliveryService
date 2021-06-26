@@ -12,6 +12,8 @@ public interface ProductService {
 
     void removeProduct();
 
+    void showProducts();
+
     List<Position> searchProductByCategory();
 
     void sortProductByPrice();

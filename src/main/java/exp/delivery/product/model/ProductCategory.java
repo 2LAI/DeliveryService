@@ -7,13 +7,19 @@ import java.util.Objects;
 
 public enum ProductCategory {
 
-    MILK(0, "Milk products"),
-    MEAT(1, "Meat products"),
-    FRUITS(2, "Fresh fruits"),
-    VEGETABLES(3, "Fresh vegetables"),
-    BAKERY(4, "Bakery products"),
-    FROZEN_FOOD(5, "Frozen food"),
-    DRINKS(6, "Drinks, juices and water");
+    DAIRY(0, "Milk products"),
+    MILK(1, "Milk"),
+    CHEESE(2, "Cheese and cheese products"),
+    YOGURTS_DESSERTS(3, "Yogurts and desserts"),
+    FRUIT_AND_VEGETABLES(4, "Fruits and vegetables"),
+    FRUIT(5, "Fruits"),
+    VEGETABLES(6, "Vegetables"),
+    BAKERY(6,"Bakery products"),
+    CAKES(7,"Cakes"),
+    BREAD(8,"Bread"),
+    DRINKS(8,"Drinks"),
+    JUICE(9,"Juice"),
+    WATER(10,"Water");
 
     private final Integer code;
 

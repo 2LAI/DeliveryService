@@ -6,6 +6,6 @@ public interface OrderService {
 
     void deleteOrder();
 
-    void showOrder();
+    void showOrders();
 
 }

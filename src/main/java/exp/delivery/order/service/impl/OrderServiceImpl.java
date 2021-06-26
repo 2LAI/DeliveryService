@@ -41,8 +41,8 @@ public class OrderServiceImpl implements OrderService {
         while (addNewPosition) {
             logger.info(storeList.get(storeId));
             logger.info("Enter id of position for order: ");
-            var idOfPositionToOrder = Long.parseLong(readline());
-            sumValue = addPositionToOrder(sumValue, productsListOrder, storeId, idOfPositionToOrder);
+            var positionId = Long.parseLong(readline());
+            sumValue = addPositionToOrder(sumValue, productsListOrder, storeId, positionId);
             logger.info("Do you want add a new position? 1 - yes, 0 - no");
             var decision = Integer.parseInt(readline());
             if (decision == 0) {
@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
                 //current user, we have not identification
                 customerList.get(0),
                 storeList.get(storeId),
-                new Payment(Payment.counter.longValue(),customerList.get(0),
+                new Payment(Payment.counter.longValue(), customerList.get(0),
                         DateUtils.asDate(LocalDateTime.now()), sumValue,
                         getByCode(paymentTypesId)),
                 productsListOrder,
@@ -103,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void showOrder() {
+    public void showOrders() {
         logger.info(orderList);
     }
 }

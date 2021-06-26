@@ -14,11 +14,11 @@ public class StoreRepository {
 
     public static List<Store> storeList = new ArrayList<>();
 
-    //just for Data Base
+
     public static void initializeStoreRepository() {
 
         List<Position> productList = new ArrayList<>();
-        productList.add(0, new Position(counter, ProductRepository.productList.get(0), "Milk 3.2%", 14.4, 3));
+        productList.add(0, new Position(counter, ProductRepository.productList.get(0), "Milk", 14.4, 3));
         productList.add(1, new Position(counter, ProductRepository.productList.get(2), "Orange Juice", 18.4, 10));
 
         List<Position> productList1 = new ArrayList<>();
@@ -48,5 +48,4 @@ public class StoreRepository {
         storeList.add(new Store(Store.counter, "Kupalinka", "Grodno", "BLK, 12", productList3));
         storeList.add(new Store(Store.counter, "Almi", "Grodno", "Pushkina, 31", productList4));
     }
-
 }
