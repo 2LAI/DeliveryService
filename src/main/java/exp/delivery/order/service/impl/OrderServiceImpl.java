@@ -41,8 +41,8 @@ public class OrderServiceImpl implements OrderService {
         while (addNewPosition) {
             logger.info(storeList.get(storeId));
             logger.info("Enter id of position for order: ");
-            var idOfPositionToOrder = Long.parseLong(readline());
-            sumValue = addPositionToOrder(sumValue, productsListOrder, storeId, idOfPositionToOrder);
+            var positionId = Long.parseLong(readline());
+            sumValue = addPositionToOrder(sumValue, productsListOrder, storeId, positionId);
             logger.info("Do you want add a new position? 1 - yes, 0 - no");
             var decision = Integer.parseInt(readline());
             if (decision == 0) {
