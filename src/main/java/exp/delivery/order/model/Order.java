@@ -3,7 +3,7 @@ package exp.delivery.order.model;
 import exp.delivery.courier.model.Courier;
 import exp.delivery.customer.model.Customer;
 import exp.delivery.payment.model.Payment;
-import exp.delivery.store.model.Position;
+import exp.delivery.position.model.Position;
 import exp.delivery.store.model.Store;
 import lombok.Data;
 import lombok.NoArgsConstructor;

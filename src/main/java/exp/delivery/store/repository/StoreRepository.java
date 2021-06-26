@@ -1,14 +1,14 @@
 package exp.delivery.store.repository;
 
 import exp.delivery.product.repository.ProductRepository;
-import exp.delivery.store.model.Position;
+import exp.delivery.position.model.Position;
 import exp.delivery.store.model.Store;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static exp.delivery.store.model.Position.*;
+import static exp.delivery.position.model.Position.*;
 
 public class StoreRepository {
 

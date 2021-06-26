@@ -1,6 +1,6 @@
 package exp.delivery.store.service.impl;
 
-import exp.delivery.store.model.Position;
+import exp.delivery.position.model.Position;
 import exp.delivery.store.model.Store;
 import exp.delivery.product.repository.ProductRepository;
 import exp.delivery.store.service.StoreService;
@@ -60,7 +60,7 @@ public class StoreServiceImpl implements StoreService {
     public void removeStore() {
         logger.info(storeList);
         logger.info("Enter id of store for remove: ");
-        int id = Integer.parseInt(readline());
+        var id = Integer.parseInt(readline());
 
         Store storeToRemove = storeList.get(id);
         storeList.remove(storeToRemove);
@@ -76,20 +76,7 @@ public class StoreServiceImpl implements StoreService {
                 .filter(position -> position.getId().equals(positionAtStore))
                 .collect(Collectors.toList()));
 
-        logger.info("What do you want to change at this position?\n 1 - Change description\n2 - Change price\n3- Change quantity");
-        var changeField = Integer.parseInt(readline());
-
-        switch (changeField) {
-            case 1:
-                changeDescription(id, positionAtStore);
-                break;
-            case 2:
-                changePrice(id, positionAtStore);
-                break;
-            case 3:
-                changeQuantity(id, positionAtStore);
-                break;
-        }
+        switchCaseMenuUpdate(id, positionAtStore);
         new SaveJsonFile().saveStoreJson(storeList);
     }
 
@@ -165,7 +152,7 @@ public class StoreServiceImpl implements StoreService {
         storeList.get(id).setName(newStoreName);
     }
 
-    private void switchCaseMenu(Integer id, int changeField) {
+    private void switchCaseMenu(Integer id, Integer changeField) {
         switch (changeField) {
 
             case 1:
@@ -188,6 +175,23 @@ public class StoreServiceImpl implements StoreService {
                 break;
             case 7:
                 showMenu();
+                break;
+        }
+    }
+
+    private void switchCaseMenuUpdate(Integer id, Long storePosition) {
+        logger.info("What do you want to change at this position?\n 1 - Change description\n2 - Change price\n3- Change quantity");
+        var changeField = Integer.parseInt(readline());
+
+        switch (changeField) {
+            case 1:
+                changeDescription(id, storePosition);
+                break;
+            case 2:
+                changePrice(id, storePosition);
+                break;
+            case 3:
+                changeQuantity(id, storePosition);
                 break;
         }
     }

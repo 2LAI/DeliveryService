@@ -4,7 +4,7 @@ import exp.delivery.order.model.Order;
 import exp.delivery.order.service.OrderService;
 import exp.delivery.payment.model.Payment;
 import exp.delivery.product.service.impl.ProductServiceImpl;
-import exp.delivery.store.model.Position;
+import exp.delivery.position.model.Position;
 import exp.delivery.utils.DateUtils;
 import exp.delivery.utils.SaveJsonFile;
 import org.apache.logging.log4j.LogManager;
@@ -31,12 +31,12 @@ public class OrderServiceImpl implements OrderService {
     public void createOrder() {
 
         var sumValue = 0.0;
-        boolean addNewPosition = true;
+        var addNewPosition = true;
         List<Position> productsListOrder = new ArrayList<>();
 
         logger.info(storeList);
         logger.info("Enter id of store for order: ");
-        int storeId = Integer.parseInt(readline());
+        var storeId = Integer.parseInt(readline());
 
         while (addNewPosition) {
             logger.info(storeList.get(storeId));
@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
             var idOfPositionToOrder = Long.parseLong(readline());
             sumValue = addPositionToOrder(sumValue, productsListOrder, storeId, idOfPositionToOrder);
             logger.info("Do you want add a new position? 1 - yes, 0 - no");
-            int decision = Integer.parseInt(readline());
+            var decision = Integer.parseInt(readline());
             if (decision == 0) {
                 addNewPosition = false;
             }
@@ -85,7 +85,7 @@ public class OrderServiceImpl implements OrderService {
                 .findFirst().orElseThrow().getPrice();
     }
 
-    private static Position addPosition(int storeId, Long positionId) {
+    private Position addPosition(int storeId, Long positionId) {
         List<Position> currentPositionToOrder = storeList.get(storeId).getPositionListAtStore().stream()
                 .filter(position -> position.getId().equals(positionId))
                 .collect(Collectors.toList());

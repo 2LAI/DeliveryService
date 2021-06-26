@@ -1,6 +1,6 @@
 package exp.delivery.product.service;
 
-import exp.delivery.store.model.Position;
+import exp.delivery.position.model.Position;
 
 import java.util.List;
 
