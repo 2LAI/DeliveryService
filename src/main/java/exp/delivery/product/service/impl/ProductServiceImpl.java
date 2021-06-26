@@ -1,6 +1,7 @@
-package exp.delivery.product.service;
+package exp.delivery.product.service.impl;
 
-import exp.delivery.exceptions.IncorrectInputException;
+import exp.delivery.utils.exceptions.IncorrectInputException;
+import exp.delivery.product.service.ProductService;
 import exp.delivery.store.model.Position;
 import exp.delivery.product.model.ProductCategory;
 import exp.delivery.product.model.Product;
@@ -28,13 +29,9 @@ public class ProductServiceImpl implements ProductService {
     public void createNewProduct() {
         logger.info(productList);
 
-        logger.info("Enter new name of product: ");
-        var productName = readline();
+        var productName = getProductName();
 
-        logger.info(Arrays.stream(values()).collect(Collectors.toList()));
-
-        logger.info("Set category of product: ");
-        ProductCategory productCategory = valueOf(readline());
+        var productCategory = getProductCategory();
 
         productList.add(new Product(Product.counter, productName, productCategory));
 
@@ -48,6 +45,79 @@ public class ProductServiceImpl implements ProductService {
         logger.info("Enter id of Product to change: ");
         var id = Integer.valueOf(readline());
 
+        switchCaseMenu(id);
+
+        new SaveJsonFile().saveProductJson(productList);
+    }
+
+    @Override
+    public void removeProduct() {
+        logger.info(productList);
+
+        logger.info("Enter id of Product to remove: ");
+        var id = Integer.parseInt(readline());
+
+        Product productToRemove = productList.get(id);
+        productList.remove(productToRemove);
+        logger.info("Product with" + id + " has been successfully removed");
+
+        logger.info(productList);
+        new SaveJsonFile().saveProductJson(productList);
+    }
+
+    @Override
+    public List<Position> searchProductByCategory() {
+        var id = chooseCategory();
+        return storeList.stream()
+                .map(Store::getPositionListAtStore)
+                .flatMap(positions -> positions.stream()
+                        .filter(position -> position.getProduct().getProductCategory().equals(getByCode(id))))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public void sortProductByPrice() {
+        List<Position> sortedPositionsByPrice = searchProductByCategory();
+        logger.info(sortedPositionsByPrice.stream()
+                .sorted(Comparator.comparing(Position::getPrice))
+                .collect(Collectors.toList()));
+    }
+
+    private ProductCategory getProductCategory() {
+        logger.info(Arrays.stream(values()).collect(Collectors.toList()));
+
+        logger.info("Set category of product: ");
+        return valueOf(readline());
+    }
+
+    private String getProductName() {
+        logger.info("Enter new name of product: ");
+        return readline();
+    }
+
+    private void changeCategoryProduct(Integer id) {
+        logger.info(Arrays.stream(values()).collect(Collectors.toList()));
+        logger.info("Set category of product: ");
+        productList.get(id).setProductCategory(valueOf(readline()));
+    }
+
+    private void changeProductName(Integer id) {
+        logger.info(productList.get(id).getProductName());
+        logger.info("Set new name of the product: ");
+        String newName = readline();
+        productList.get(id).setProductName(newName);
+    }
+
+    private int chooseCategory() {
+        for (ProductCategory id : values()) {
+            logger.info("To find all products with category " + id + " enter " + id.getCode());
+        }
+
+        logger.info("Enter code of Category: ");
+        return Integer.parseInt(readline());
+    }
+
+    private void switchCaseMenu(Integer id) {
         logger.info("What are you want to change?\n 1 - Name of the product \n" +
                 "2 - Category of the product \n 3 - Back in main menu ");
 
@@ -67,60 +137,5 @@ public class ProductServiceImpl implements ProductService {
             default:
                 throw new IncorrectInputException("Incorrect choice");
         }
-        new SaveJsonFile().saveProductJson(productList);
-    }
-
-    @Override
-    public void removeProduct() {
-        logger.info(productList);
-
-        logger.info("Enter id of Product to remove: ");
-        var id = Integer.parseInt(readline());
-
-        Product productToRemove = productList.get(id);
-        productList.remove(productToRemove);
-        logger.info("Product with" + id + " has been successfully removed");
-        logger.info(productList);
-        new SaveJsonFile().saveProductJson(productList);
-    }
-
-    @Override
-    public List<Position> searchProductByCategory() {
-        var id = chooseCategory("To find all products with category ");
-        return storeList.stream()
-                .map(Store::getPositionListAtStore)
-                .flatMap(positions -> positions.stream()
-                        .filter(position -> position.getProduct().getProductCategory().equals(getByCode(id))))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public void sortProductByPrice() {
-        List<Position> sortedPositionsByPrice = searchProductByCategory();
-        logger.info(sortedPositionsByPrice.stream()
-                .sorted(Comparator.comparing(Position::getPrice))
-                .collect(Collectors.toList()));
-    }
-
-    private void changeCategoryProduct(Integer id) {
-        logger.info(Arrays.stream(values()).collect(Collectors.toList()));
-        logger.info("Set category of product: ");
-        productList.get(id).setProductCategory(valueOf(readline()));
-    }
-
-    private void changeProductName(Integer id) {
-        logger.info(productList.get(id).getProductName());
-        logger.info("Set new name of the product: ");
-        String newName = readline();
-        productList.get(id).setProductName(newName);
-    }
-
-    private int chooseCategory(String s) {
-        for (ProductCategory id : values()) {
-            logger.info(s + id + " enter " + id.getCode());
-        }
-
-        logger.info("Enter code of Category: ");
-        return Integer.parseInt(readline());
     }
 }

@@ -1,7 +1,8 @@
-package exp.delivery.customer.service;
+package exp.delivery.customer.service.impl;
 
 import exp.delivery.customer.model.Customer;
-import exp.delivery.exceptions.IncorrectInputException;
+import exp.delivery.customer.service.CustomerService;
+import exp.delivery.utils.exceptions.IncorrectInputException;
 import exp.delivery.utils.SaveJsonFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,29 +46,7 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Enter id of user: ");
         var id = Integer.valueOf(readline());
 
-        logger.info("What are you want to change?\n 1 - First name \n 2 - Last Name \n 3 - Email \n 4 - Phone Number \n 5 - Home Address ");
-        var changeField = readline();
-
-        switch (changeField) {
-
-            case ONE:
-                changeFirstname(id);
-                break;
-            case TWO:
-                changeLastname(id);
-                break;
-            case THREE:
-                changeEmail(id);
-                break;
-            case FOUR:
-                changePhoneNumber(id);
-                break;
-            case FIVE:
-                changeHomeAddress(id);
-                break;
-            default:
-                throw new IncorrectInputException("Incorrect choice");
-        }
+        switchCaseMenu(id);
         new SaveJsonFile().saveCustomerJson(customerList);
         logger.info("Customer has been successfully updated: ");
     }
@@ -75,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void removeCustomer() {
         logger.info(customerList);
-        logger.info("Enter id of user to remove: ");
+        logger.info("Enter user id to remove: ");
         var id = Integer.parseInt(readline());
 
         customerList.remove(id);
@@ -112,5 +91,31 @@ public class CustomerServiceImpl implements CustomerService {
         logger.info("Enter new home address: ");
         String newHomeAddress = readline();
         customerList.get(id).setFirstName(newHomeAddress);
+    }
+
+    private void switchCaseMenu(Integer id) {
+        logger.info("What are you want to change?\n 1 - First name \n 2 - Last Name \n 3 - Email \n 4 - Phone Number \n 5 - Home Address ");
+        var changeField = readline();
+
+        switch (changeField) {
+
+            case ONE:
+                changeFirstname(id);
+                break;
+            case TWO:
+                changeLastname(id);
+                break;
+            case THREE:
+                changeEmail(id);
+                break;
+            case FOUR:
+                changePhoneNumber(id);
+                break;
+            case FIVE:
+                changeHomeAddress(id);
+                break;
+            default:
+                throw new IncorrectInputException("Incorrect choice");
+        }
     }
 }

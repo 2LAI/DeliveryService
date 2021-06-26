@@ -1,8 +1,9 @@
-package exp.delivery.store.service;
+package exp.delivery.store.service.impl;
 
 import exp.delivery.store.model.Position;
 import exp.delivery.store.model.Store;
 import exp.delivery.product.repository.ProductRepository;
+import exp.delivery.store.service.StoreService;
 import exp.delivery.utils.SaveJsonFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,30 +51,8 @@ public class StoreServiceImpl implements StoreService {
 
         var changeField = Integer.parseInt(readline());
 
-        switch (changeField) {
+        switchCaseMenu(id, changeField);
 
-            case 1:
-                changeStoreName(id);
-                break;
-            case 2:
-                changeCityOfStore(id);
-                break;
-            case 3:
-                changeAddressOfStore(id);
-                break;
-            case 4:
-                updatePositionList(id);
-                break;
-            case 5:
-                addNewPosition(id);
-                break;
-            case 6:
-                removeStore();
-                break;
-            case 7:
-                showMenu();
-                break;
-        }
         new SaveJsonFile().saveStoreJson(storeList);
     }
 
@@ -184,5 +163,32 @@ public class StoreServiceImpl implements StoreService {
         logger.info("Enter new Store name: ");
         String newStoreName = readline();
         storeList.get(id).setName(newStoreName);
+    }
+
+    private void switchCaseMenu(Integer id, int changeField) {
+        switch (changeField) {
+
+            case 1:
+                changeStoreName(id);
+                break;
+            case 2:
+                changeCityOfStore(id);
+                break;
+            case 3:
+                changeAddressOfStore(id);
+                break;
+            case 4:
+                updatePositionList(id);
+                break;
+            case 5:
+                addNewPosition(id);
+                break;
+            case 6:
+                removeStore();
+                break;
+            case 7:
+                showMenu();
+                break;
+        }
     }
 }

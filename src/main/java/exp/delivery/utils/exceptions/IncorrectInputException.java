@@ -1,4 +1,4 @@
-package exp.delivery.exceptions;
+package exp.delivery.utils.exceptions;
 
 public class IncorrectInputException extends RuntimeException {
 

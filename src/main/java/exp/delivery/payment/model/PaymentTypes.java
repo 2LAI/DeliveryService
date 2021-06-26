@@ -1,6 +1,6 @@
 package exp.delivery.payment.model;
 
-import exp.delivery.exceptions.IncorrectInputException;
+import exp.delivery.utils.exceptions.IncorrectInputException;
 
 import java.util.Arrays;
 import java.util.Objects;
