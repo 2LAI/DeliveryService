@@ -14,7 +14,6 @@ public class Courier {
     private String lastName;
     private String carNumber;
 
-    //for a better showing at the console
     public Courier(Long id, String firstName, String lastName, String carNumber) {
         this.id = ++counter;//for auto incrementation
         this.firstName = firstName;
